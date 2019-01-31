@@ -1,38 +1,12 @@
 ---
-title: Hello World
+title: 半夜开博客，一定有话要BB
 ---
-Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
 
-## Quick Start
+妈的！工作7，8年，一直在写业务，很多技术侧的沉淀不够多，技术深度不够，最近在工作上感受到了乏力！
 
-### Create a new post
+所以这里，我tm的匿名开博客，以后每日最少写一篇技术文章，做好深度的沉淀！
 
-``` bash
-$ hexo new "My New Post"
-```
+2019年，主要研究Java技术栈内容
 
-More info: [Writing](https://hexo.io/docs/writing.html)
+## 加油
 
-### Run server
-
-``` bash
-$ hexo server
-```
-
-More info: [Server](https://hexo.io/docs/server.html)
-
-### Generate static files
-
-``` bash
-$ hexo generate
-```
-
-More info: [Generating](https://hexo.io/docs/generating.html)
-
-### Deploy to remote sites
-
-``` bash
-$ hexo deploy
-```
-
-More info: [Deployment](https://hexo.io/docs/deployment.html)
