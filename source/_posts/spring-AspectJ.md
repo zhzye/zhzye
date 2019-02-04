@@ -11,6 +11,7 @@ toc: false
 date: 2019-02-03 20:46:33
 ---
 
+话不多说，先扔个代码库，能直接运行，看不懂这个wiki，去testcase调试：https://github.com/zhzye/spring/tree/master/aspectJ
 # 使用方式
 
 - xml
@@ -180,3 +181,34 @@ JUST ACTION!
 
 多个切点，可以使用`||`连接
 
+
+# xml方式
+
+``` xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"> <!-- bean definitions here -->
+    <bean id="person" class="com.zhzye.aspectj.Person"/>
+    <bean id="personAspect" class="com.zhzye.aspectj.PersonBeforeAdviceXml"/>
+    <aop:config>
+        <!--切点-->
+        <aop:pointcut id="personAdviceBefore" expression="execution(* hi(..))"/>
+        <aop:pointcut id="personAdviceRound" expression="execution(* say(..))"/>
+        <aop:pointcut id="personAdviceAfterReturn" expression="execution(* hi(..))"/>
+        <aop:pointcut id="personAdviceAfterThrow" expression="execution(* exeThrowException(..))"/>
+        <!--切面-->
+        <aop:aspect ref="personAspect">
+            <aop:before method="before" pointcut-ref="personAdviceBefore"/>
+            <aop:around method="around" pointcut-ref="personAdviceRound"/>
+            <aop:after-returning method="after" pointcut-ref="personAdviceAfterReturn" returning="result"/>
+            <aop:after-throwing method="afterThrow" pointcut-ref="personAdviceAfterThrow" throwing="e"/>
+            <aop:after method="finalDO" pointcut-ref="personAdviceAfterThrow"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
+```
+
+这种方式与注解方式使用都是一致的，这里不概述了。
