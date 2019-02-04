@@ -4,7 +4,7 @@ tags:
   - spring
   - aop
   - AspectJ
-originContent: "# 使用方式\n\n- xml\n- 注解\n\n# what\n\n- 基于java语言的aop框架\n- spring2.0 整合aspectJ\n- @AspectJ是aspectJ1.5新增功能，通过JDK5注解技术，允许直接在Bean类中定义切面\n\n# 依赖\n\n``` xml\n    <dependency>\n      <groupId>org.springframework</groupId>\n      <artifactId>spring-aop</artifactId>\n      <version>${spring.version}</version>\n    </dependency>\n    <dependency>\n      <groupId>aopalliance</groupId>\n      <artifactId>aopalliance</artifactId>\n      <version>1.0</version>\n    </dependency>\n\t<dependency>\n      <groupId>org.springframework</groupId>\n      <artifactId>spring-aspects</artifactId>\n      <version>${spring.version}</version>\n    </dependency>\n    <dependency>\n      <groupId>org.aspectj</groupId>\n      <artifactId>aspectjweaver</artifactId>\n      <version>1.9.2</version>\n    </dependency>\n```\n\n# 环境准备\n\n## xml\n\n``` xml\n<aop:aspectj-autoproxy/>\n```\n\n注解一个切面`@Aspect`，用下述标签定义通知（advice）\n\n\n# 通知类型\n\n- @Before\n\t- 前置通知\n\t\t- BeforeAdvice\n- @AfterReturning\n\t- 后置通知\n\t\t- AfterReturningAdvice\n- @Around\n\t- 环绕通知\n\t\t- MethodIntercepter\n- @AfterThrowing\n\t- 异常抛出通知\n\t\t- ThrowAdvice\n- @After\n\t- 最终执行\n- @DeclareParents\n\t- 引介通知\n\t\t- IntroductionIntercepter\n\n# aspectj提供execution表达式，必须精通\n\n语法：execution(<访问修饰符>?<返回类型><方法名>(<参数>)<异常>)\n\n- 所有类public方法\n\t- execution(public * *(..))\n- 指定包所有方法\n\t- execution(* com.imooc.dao.*(..)) `不含子包`\n- 包和子包下所有类\n\t- execution(* com.imooc.dao..*(..))`包和子包下所有类`\n- 指定类所有方法\n\t- execution(* com.imooc.service.UserService.*(..))\n- 指定特定接口(GenericDao)\n\t- execution(* com.imooc.dao.GenericDao+.*(..))\n- 匹配所有save\n\t- execution(* save*(..))\n\n# 为advice增加注入joinpoint参数\n\n``` java\n    @Before(value = \"execution(* sa*(..))\")\n    public void before(JoinPoint joinPoint) {\n        System.out.println(\"before注入\" + joinPoint);\n    }\n```\n\n# 后置通知，通过配置返回值参数，可以获取执行后的return\n\n``` java\n@AfterReturning(value = \"execution(* sa*(..))\", returning = \"result\")\n    public void after(JoinPoint joinPoint, Object result) {\n        System.out.println(\"after注入 \" + joinPoint + \" \" + result);\n    }\n```\n"
+originContent: "# 使用方式\n\n- xml\n- 注解\n\n# what\n\n- 基于java语言的aop框架\n- spring2.0 整合aspectJ\n- @AspectJ是aspectJ1.5新增功能，通过JDK5注解技术，允许直接在Bean类中定义切面\n\n# 依赖\n\n``` xml\n    <dependency>\n      <groupId>org.springframework</groupId>\n      <artifactId>spring-aop</artifactId>\n      <version>${spring.version}</version>\n    </dependency>\n    <dependency>\n      <groupId>aopalliance</groupId>\n      <artifactId>aopalliance</artifactId>\n      <version>1.0</version>\n    </dependency>\n\t<dependency>\n      <groupId>org.springframework</groupId>\n      <artifactId>spring-aspects</artifactId>\n      <version>${spring.version}</version>\n    </dependency>\n    <dependency>\n      <groupId>org.aspectj</groupId>\n      <artifactId>aspectjweaver</artifactId>\n      <version>1.9.2</version>\n    </dependency>\n```\n\n# 环境准备\n\n## xml\n\n``` xml\n<aop:aspectj-autoproxy/>\n```\n\n注解一个切面`@Aspect`，用下述标签定义通知（advice）\n\n\n# 通知类型\n\n- @Before\n\t- 前置通知\n\t\t- BeforeAdvice\n- @AfterReturning\n\t- 后置通知\n\t\t- AfterReturningAdvice\n- @Around\n\t- 环绕通知\n\t\t- MethodIntercepter\n- @AfterThrowing\n\t- 异常抛出通知\n\t\t- ThrowAdvice\n- @After\n\t- 最终执行\n- @DeclareParents\n\t- 引介通知\n\t\t- IntroductionIntercepter\n\n# aspectj提供execution表达式，必须精通\n\n语法：execution(<访问修饰符>?<返回类型><方法名>(<参数>)<异常>)\n\n- 所有类public方法\n\t- execution(public * *(..))\n- 指定包所有方法\n\t- execution(* com.imooc.dao.*(..)) `不含子包`\n- 包和子包下所有类\n\t- execution(* com.imooc.dao..*(..))`包和子包下所有类`\n- 指定类所有方法\n\t- execution(* com.imooc.service.UserService.*(..))\n- 指定特定接口(GenericDao)\n\t- execution(* com.imooc.dao.GenericDao+.*(..))\n- 匹配所有save\n\t- execution(* save*(..))\n\n# 为advice增加注入joinpoint参数\n\n``` java\n    @Before(value = \"execution(* sa*(..))\")\n    public void before(JoinPoint joinPoint) {\n        System.out.println(\"before注入\" + joinPoint);\n    }\n```\n\n# 后置通知，通过配置返回值参数，可以获取执行后的return\n\n``` java\n    @AfterReturning(value = \"execution(* sa*(..))\", returning = \"result\")\n    public void after(JoinPoint joinPoint, Object result) {\n        System.out.println(\"after注入 \" + joinPoint + \" \" + result);\n    }\n```\n\n# 环绕通知\n\n如果`ProceedingJoinPoint`不被调用proceed()方法，则被阻止运行了\n\n``` java\n    @Around(value = \"execution(* hi(..))\")\n    public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {\n        System.out.println(\"环绕===before\");\n        Object object = proceedingJoinPoint.proceed();\n        System.out.println(\"环绕===after\");\n        return object;\n    }\n```\n"
 categories:
   - spring
 toc: false
@@ -110,5 +110,41 @@ date: 2019-02-03 20:46:33
     @AfterReturning(value = "execution(* sa*(..))", returning = "result")
     public void after(JoinPoint joinPoint, Object result) {
         System.out.println("after注入 " + joinPoint + " " + result);
+    }
+```
+
+# 环绕通知
+
+如果`ProceedingJoinPoint`不被调用proceed()方法，则被阻止运行了
+
+``` java
+    @Around(value = "execution(* hi(..))")
+    public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        System.out.println("环绕===before");
+        Object object = proceedingJoinPoint.proceed();
+        System.out.println("环绕===after");
+        return object;
+    }
+```
+
+# 异常抛出通知
+
+如果存在运行时异常，会被触发，如:`1/0`
+
+``` java
+    @AfterThrowing(value = "execution(* exeThrowException(..))", throwing = "e")
+    public void afterThrow(Throwable e) {
+        System.out.println("异常抛出通知 e " + e.getMessage());
+    }
+```
+
+# 最终通知
+
+无论是否包含异常都会被执行
+
+``` java
+    @After(value = "execution(* exeThrowException(..))")
+    public void finalDO() {
+        System.out.println("最终通知");
     }
 ```
