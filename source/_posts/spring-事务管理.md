@@ -169,6 +169,8 @@ select * from users;
 
 ## jdbc事务
 
+
+
 - Connection管理事务
 	- setAutoCommit
 	- commit
@@ -182,6 +184,28 @@ select * from users;
 - 隔离设置
 	- getTransaction
 	- setTransaction
+
+``` java
+
+    public void saveStudentAndClassWithOpenTx() {
+        getDbConnection();
+        try {
+            conn.setAutoCommit(false);
+            statement.execute("insert into classes(cname) values('classA')");
+            statement.execute("insert into users(uname, cid) values ('userA', 1)");
+            conn.commit();
+        } catch (SQLException e) {
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+
+    }
+```
+
 
 ## spring事务
 
